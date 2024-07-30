@@ -11,10 +11,16 @@ export class GraphologyGraphDatabaseConnector implements IGraphDatabaseConnector
   addNode(node: string): void {
     this.graph.addNode(node);
   }
+
   addEdge(from: string, to: string): void {
     this.graph.addEdge(from, to);
   }
+
   getNeighbors(node: string): string[] {
     return this.graph.neighbors(node);
+  }
+
+  getSize(): number {
+    return JSON.stringify(this.graph.export()).length;
   }
 }

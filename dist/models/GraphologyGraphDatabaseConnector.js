@@ -13,4 +13,7 @@ export class GraphologyGraphDatabaseConnector {
     getNeighbors(node) {
         return this.graph.neighbors(node);
     }
+    getSize() {
+        return JSON.stringify(this.graph.export()).length;
+    }
 }

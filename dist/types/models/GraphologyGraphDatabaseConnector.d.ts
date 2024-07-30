@@ -6,4 +6,5 @@ export declare class GraphologyGraphDatabaseConnector implements IGraphDatabaseC
     addNode(node: string): void;
     addEdge(from: string, to: string): void;
     getNeighbors(node: string): string[];
+    getSize(): number;
 }
