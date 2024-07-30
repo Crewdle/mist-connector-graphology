@@ -1,0 +1,33 @@
+{
+  "name": "@crewdle/mist-connector-graphology",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "copy-sdk-types": "cp -r ../web-sdk-types/dist ./node_modules/@crewdle/web-sdk-types"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Crewdle/mist-connector-graphology.git"
+  },
+  "keywords": [],
+  "author": "Crewdle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Crewdle/mist-connector-graphology/issues"
+  },
+  "homepage": "https://github.com/Crewdle/mist-connector-graphology#readme",
+  "files": [
+    "dist/"
+  ],
+  "dependencies": {
+    "graphology": "^0.25.4"
+  },
+  "devDependencies": {
+    "@crewdle/web-sdk-types": "^1.0.17",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.4"
+  }
+}
