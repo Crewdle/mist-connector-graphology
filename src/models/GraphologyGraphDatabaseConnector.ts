@@ -8,12 +8,14 @@ export class GraphologyGraphDatabaseConnector implements IGraphDatabaseConnector
     this.graph = new Graph();
   }
 
-  addNode(node: string): void {
-    this.graph.addNode(node);
+  addNode(name: string, content: string[], node: string): void {
+    const attributes: { [key: string]: string[] } = {};
+    attributes[name] = content;
+    this.graph.mergeNode(node, attributes);
   }
 
   addEdge(from: string, to: string): void {
-    this.graph.addEdge(from, to);
+    this.graph.mergeEdge(from, to);
   }
 
   getNeighbors(node: string): string[] {

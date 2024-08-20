@@ -4,11 +4,13 @@ export class GraphologyGraphDatabaseConnector {
     constructor() {
         this.graph = new Graph();
     }
-    addNode(node) {
-        this.graph.addNode(node);
+    addNode(name, content, node) {
+        const attributes = {};
+        attributes[name] = content;
+        this.graph.mergeNode(node, attributes);
     }
     addEdge(from, to) {
-        this.graph.addEdge(from, to);
+        this.graph.mergeEdge(from, to);
     }
     getNeighbors(node) {
         return this.graph.neighbors(node);
