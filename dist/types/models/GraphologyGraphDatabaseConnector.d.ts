@@ -12,5 +12,6 @@ export declare class GraphologyGraphDatabaseConnector implements IGraphDatabaseC
         [key: string]: string[];
     };
     getSize(): number;
+    remove(name: string): void;
     private getNeighbors;
 }
