@@ -42,6 +42,9 @@ export class GraphologyGraphDatabaseConnector implements IGraphDatabaseConnector
     for (const entity of entities) {
       const newContent = this.graph.getNodeAttributes(entity) as { [key: string]: IGraphologyGraphDatabaseIndex[] };
       for (const key in newContent) {
+        if (this.documents[key] === undefined) {
+          continue;
+        }
         if (content[key] === undefined) {
           content[key] = [];
         }
@@ -62,6 +65,10 @@ export class GraphologyGraphDatabaseConnector implements IGraphDatabaseConnector
 
   getSize(): number {
     return JSON.stringify(this.graph.export()).length;
+  }
+
+  remove(name: string): void {
+    delete this.documents[name];
   }
 
   private getNeighbors(node: string, depth: number): string[] {

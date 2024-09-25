@@ -30,6 +30,9 @@ export class GraphologyGraphDatabaseConnector {
         for (const entity of entities) {
             const newContent = this.graph.getNodeAttributes(entity);
             for (const key in newContent) {
+                if (this.documents[key] === undefined) {
+                    continue;
+                }
                 if (content[key] === undefined) {
                     content[key] = [];
                 }
@@ -47,6 +50,9 @@ export class GraphologyGraphDatabaseConnector {
     }
     getSize() {
         return JSON.stringify(this.graph.export()).length;
+    }
+    remove(name) {
+        delete this.documents[name];
     }
     getNeighbors(node, depth) {
         if (depth === 0) {
