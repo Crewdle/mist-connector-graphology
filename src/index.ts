@@ -22,4 +22,4 @@ export function getGraphologyGraphDatabaseConnector(
   };
 }
 
-export { GraphDatabaseConnectorConstructor };
+export { GraphologyGraphDatabaseConnector };

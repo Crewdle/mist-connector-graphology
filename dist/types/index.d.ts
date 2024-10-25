@@ -1,4 +1,5 @@
 import { GraphDatabaseConnectorConstructor } from '@crewdle/web-sdk-types';
+import { GraphologyGraphDatabaseConnector } from './models/GraphologyGraphDatabaseConnector';
 import { IGraphologyGraphDatabaseOptions } from './models/GraphologyGraphDatabaseOptions';
 /**
  * Get the Graphology Graph Database connector.
@@ -6,4 +7,4 @@ import { IGraphologyGraphDatabaseOptions } from './models/GraphologyGraphDatabas
  * @returns The Graphology Graph Database connector constructor.
  */
 export declare function getGraphologyGraphDatabaseConnector(options?: IGraphologyGraphDatabaseOptions): GraphDatabaseConnectorConstructor;
-export { GraphDatabaseConnectorConstructor };
+export { GraphologyGraphDatabaseConnector };

@@ -14,3 +14,4 @@ export function getGraphologyGraphDatabaseConnector(options) {
         }
     };
 }
+export { GraphologyGraphDatabaseConnector };
