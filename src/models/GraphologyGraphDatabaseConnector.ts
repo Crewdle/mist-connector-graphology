@@ -91,7 +91,7 @@ export class GraphologyGraphDatabaseConnector implements IGraphDatabaseConnector
     const documentsBuffer = Buffer.from(JSON.stringify(this.documents));
     const documentsBufferLength = documentsBuffer.byteLength;
 
-    let buffer = Buffer.alloc(4 + graphBufferLength + 4 + documentsBufferLength);
+    let buffer = Buffer.alloc(4 + 4);
     buffer.writeUInt32LE(graphBufferLength, 0);
     buffer.writeUInt32LE(documentsBufferLength, 4 + graphBufferLength);
     buffer = Buffer.concat([buffer, graphBuffer, documentsBuffer]);
