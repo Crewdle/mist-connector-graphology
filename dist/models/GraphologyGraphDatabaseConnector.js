@@ -73,13 +73,14 @@ export class GraphologyGraphDatabaseConnector {
         buffer.writeUInt32LE(graphBufferLength, 0);
         buffer.writeUInt32LE(documentsBufferLength, 4 + graphBufferLength);
         buffer = Buffer.concat([buffer, graphBuffer, documentsBuffer]);
-        fs.writeFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.json`, buffer);
+        fs.rmSync(`${this.baseFolder}/graph-${this.dbKey}-*.bin`, { force: true });
+        fs.writeFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.bin`, buffer);
     }
     loadFromDisk(version) {
         if (!this.baseFolder) {
             return;
         }
-        const buffer = fs.readFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.json`);
+        const buffer = fs.readFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.bin`);
         const graphBufferLength = buffer.readUInt32LE(0);
         const documentsBufferLength = buffer.readUInt32LE(4 + graphBufferLength);
         const graphBuffer = buffer.subarray(4, 4 + graphBufferLength);
