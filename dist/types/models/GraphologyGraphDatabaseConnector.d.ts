@@ -17,7 +17,7 @@ export declare class GraphologyGraphDatabaseConnector implements IGraphDatabaseC
     };
     getSize(): number;
     remove(name: string): void;
-    saveToDisk(version: number): void;
-    loadFromDisk(version: number): void;
+    saveToDisk(version: string): void;
+    loadFromDisk(version: string): void;
     private getNeighbors;
 }

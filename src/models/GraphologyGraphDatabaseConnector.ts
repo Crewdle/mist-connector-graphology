@@ -81,7 +81,7 @@ export class GraphologyGraphDatabaseConnector implements IGraphDatabaseConnector
     delete this.documents[name];
   }
 
-  saveToDisk(version: number): void {
+  saveToDisk(version: string): void {
     if (!this.baseFolder) {
       return;
     }
@@ -100,7 +100,7 @@ export class GraphologyGraphDatabaseConnector implements IGraphDatabaseConnector
     fs.writeFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.bin`, buffer);
   }
 
-  loadFromDisk(version: number): void {
+  loadFromDisk(version: string): void {
     if (!this.baseFolder) {
       return;
     }
