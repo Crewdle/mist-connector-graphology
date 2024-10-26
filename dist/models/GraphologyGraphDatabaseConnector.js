@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import Graph from 'graphology';
 export class GraphologyGraphDatabaseConnector {
     dbKey;
@@ -73,7 +74,18 @@ export class GraphologyGraphDatabaseConnector {
         buffer.writeUInt32LE(graphBufferLength, 0);
         buffer.writeUInt32LE(documentsBufferLength, 4 + graphBufferLength);
         buffer = Buffer.concat([buffer, graphBuffer, documentsBuffer]);
-        fs.rmSync(`${this.baseFolder}/graph-${this.dbKey}-*.bin`, { force: true });
+        try {
+            const pattern = new RegExp(`^graph-${this.dbKey}-.*\.bin$`);
+            const files = fs.readdirSync(this.baseFolder);
+            for (const file of files) {
+                if (pattern.test(file)) {
+                    fs.rmSync(path.join(this.baseFolder, file), { force: true });
+                }
+            }
+        }
+        catch (err) {
+            console.error('Error removing files:', err);
+        }
         fs.writeFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.bin`, buffer);
     }
     loadFromDisk(version) {
