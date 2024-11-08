@@ -1,8 +1,16 @@
+import fs from 'fs';
+import path from 'path';
 import Graph from 'graphology';
 export class GraphologyGraphDatabaseConnector {
+    dbKey;
+    options;
     graph;
     documents = {};
-    constructor() {
+    baseFolder;
+    constructor(dbKey, options) {
+        this.dbKey = dbKey;
+        this.options = options;
+        this.baseFolder = this.options?.baseFolder;
         this.graph = new Graph();
     }
     addNode(name, content, index, node) {
@@ -53,6 +61,44 @@ export class GraphologyGraphDatabaseConnector {
     }
     remove(name) {
         delete this.documents[name];
+    }
+    saveToDisk(version) {
+        if (!this.baseFolder) {
+            return;
+        }
+        const graphBuffer = Buffer.from(JSON.stringify(this.graph.export()));
+        const graphBufferLength = graphBuffer.byteLength;
+        const documentsBuffer = Buffer.from(JSON.stringify(this.documents));
+        const documentsBufferLength = documentsBuffer.byteLength;
+        let buffer = Buffer.alloc(4 + 4);
+        buffer.writeUInt32LE(graphBufferLength, 0);
+        buffer.writeUInt32LE(documentsBufferLength, 4 + graphBufferLength);
+        buffer = Buffer.concat([buffer, graphBuffer, documentsBuffer]);
+        try {
+            const pattern = new RegExp(`^graph-${this.dbKey}-.*\.bin$`);
+            const files = fs.readdirSync(this.baseFolder);
+            for (const file of files) {
+                if (pattern.test(file)) {
+                    fs.rmSync(path.join(this.baseFolder, file), { force: true });
+                }
+            }
+        }
+        catch (err) {
+            console.error('Error removing files:', err);
+        }
+        fs.writeFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.bin`, buffer);
+    }
+    loadFromDisk(version) {
+        if (!this.baseFolder) {
+            return;
+        }
+        const buffer = fs.readFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.bin`);
+        const graphBufferLength = buffer.readUInt32LE(0);
+        const documentsBufferLength = buffer.readUInt32LE(4 + graphBufferLength);
+        const graphBuffer = buffer.subarray(4, 4 + graphBufferLength);
+        const documentsBuffer = buffer.subarray(4 + graphBufferLength + 4, 4 + graphBufferLength + 4 + documentsBufferLength);
+        this.graph.import(JSON.parse(graphBuffer.toString()));
+        this.documents = JSON.parse(documentsBuffer.toString());
     }
     getNeighbors(node, depth) {
         if (depth === 0) {
