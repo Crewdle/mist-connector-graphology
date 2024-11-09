@@ -1,6 +1,6 @@
 {
   "name": "@crewdle/mist-connector-graphology",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -26,7 +26,7 @@
     "graphology": "^0.25.4"
   },
   "devDependencies": {
-    "@crewdle/web-sdk-types": "^1.0.23",
+    "@crewdle/web-sdk-types": "^1.0.25",
     "@types/node": "^22.0.0",
     "typescript": "^5.5.4"
   }
