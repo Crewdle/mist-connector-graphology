@@ -72,7 +72,7 @@ export class GraphologyGraphDatabaseConnector {
         const documentsBufferLength = documentsBuffer.byteLength;
         let buffer = Buffer.alloc(4 + 4);
         buffer.writeUInt32LE(graphBufferLength, 0);
-        buffer.writeUInt32LE(documentsBufferLength, 4 + graphBufferLength);
+        buffer.writeUInt32LE(documentsBufferLength, 4);
         buffer = Buffer.concat([buffer, graphBuffer, documentsBuffer]);
         try {
             const pattern = new RegExp(`^graph-${this.dbKey}-.*\.bin$`);
