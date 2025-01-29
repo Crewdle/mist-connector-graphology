@@ -94,9 +94,9 @@ export class GraphologyGraphDatabaseConnector {
         }
         const buffer = fs.readFileSync(`${this.baseFolder}/graph-${this.dbKey}-${version}.bin`);
         const graphBufferLength = buffer.readUInt32LE(0);
-        const documentsBufferLength = buffer.readUInt32LE(4 + graphBufferLength);
-        const graphBuffer = buffer.subarray(4, 4 + graphBufferLength);
-        const documentsBuffer = buffer.subarray(4 + graphBufferLength + 4, 4 + graphBufferLength + 4 + documentsBufferLength);
+        const documentsBufferLength = buffer.readUInt32LE(4);
+        const graphBuffer = buffer.subarray(4 + 4, 4 + 4 + graphBufferLength);
+        const documentsBuffer = buffer.subarray(4 + 4 + graphBufferLength, 4 + 4 + graphBufferLength + documentsBufferLength);
         this.graph.import(JSON.parse(graphBuffer.toString()));
         this.documents = JSON.parse(documentsBuffer.toString());
     }
